@@ -1,10 +1,12 @@
 package kokhanevich.spring.entity;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +19,8 @@ public class Book {
     private String name;
     private Integer year;
     private Double price;
+    @ManyToMany(mappedBy = "bookList")
+    private List<Author> authorList;
 
     public Book() {
 
@@ -58,5 +62,13 @@ public class Book {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public List<Author> getAuthorList() {
+        return authorList;
+    }
+
+    public void setAuthorList(List<Author> authorList) {
+        this.authorList = authorList;
     }
 }
