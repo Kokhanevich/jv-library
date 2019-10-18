@@ -21,27 +21,26 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public List<Author> findByName(String name) {
-        @SuppressWarnings("unchecked")
         TypedQuery<Author> query = sessionFactory.getCurrentSession()
-                .createQuery("from Author where name=:name");
-        query.setParameter("name", name);
+                .createQuery("from Author where name LIKE :name", Author.class);
+        query.setParameter("name", "%" + name + "%");
         return query.getResultList();
     }
 
     @Override
     public List<Author> findByNameAndSurname(String name, String surname) {
-        @SuppressWarnings("unchecked")
         TypedQuery<Author> query = sessionFactory.getCurrentSession()
-                .createQuery("from Author where name=:name and surname=:surname");
-        query.setParameter("name", name);
-        query.setParameter("surname", surname);
+                .createQuery("from Author where name LIKE :name and surname LIKE :surname",
+                        Author.class);
+        query.setParameter("name","%" + name + "%");
+        query.setParameter("surname", "%" + surname + "%");
         return query.getResultList();
     }
 
     @Override
     public List<Author> getAllAuthors() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Author> query = sessionFactory.getCurrentSession().createQuery("from Author");
+        TypedQuery<Author> query = sessionFactory.getCurrentSession().createQuery("from Author",
+                Author.class);
         return query.getResultList();
     }
 }

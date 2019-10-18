@@ -34,18 +34,17 @@ public class RentDaoImpl implements RentDao {
     @Override
     public Rent getRent(User user, Book book) {
         Query query = sessionFactory.getCurrentSession()
-                .createQuery("from Rent where user_id=:user_id and book_id=:book_id");
-        query.setParameter("user_id", user.getId());
-        query.setParameter("book_id", book.getId());
+                .createQuery("from Rent where user_id LIKE :user_id and book_id LIKE :book_id");
+        query.setParameter("user_id","%" + user.getId() + "%");
+        query.setParameter("book_id", "%" + book.getId() + "%");
         return (Rent) query.getSingleResult();
     }
 
     @Override
     public List<Book> getBooksRentByUser(User user) {
-        @SuppressWarnings("unchecked")
         TypedQuery<Book> query = sessionFactory.getCurrentSession()
-                .createQuery("select book from Rent where user_id=:user_id");
-        query.setParameter("user_id", user.getId());
+                .createQuery("select book from Rent where user_id LIKE :user_id", Book.class);
+        query.setParameter("user_id", "%" + user.getId() + "%");
         return query.getResultList();
     }
 }
