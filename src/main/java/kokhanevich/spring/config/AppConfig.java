@@ -2,8 +2,6 @@ package kokhanevich.spring.config;
 
 import java.util.Properties;
 import javax.sql.DataSource;
-import kokhanevich.spring.entity.Book;
-import kokhanevich.spring.entity.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +46,7 @@ public class AppConfig {
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class, Book.class);
+        factoryBean.setPackagesToScan("kokhanevich.spring.entity");
         return factoryBean;
     }
 

@@ -20,9 +20,17 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public List<Book> findBookByName(String name) {
+        TypedQuery<Book> query = sessionFactory.getCurrentSession()
+                .createQuery("from Book where name LIKE :name", Book.class);
+        query.setParameter("name", "%" + name + "%");
+        return query.getResultList();
+    }
+
+    @Override
     public List<Book> listBooks() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("from Book");
+        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("from Book",
+                Book.class);
         return query.getResultList();
     }
 }
