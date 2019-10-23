@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/rent")
@@ -29,8 +30,8 @@ public class RentController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/{bookId}")
-    public String rentBook(@PathVariable ("bookId") Long bookId, ModelMap modelMap) {
+    @GetMapping("/getRent")
+    public String rentBook(@RequestParam("bookId") Long bookId, ModelMap modelMap) {
         Optional<Book> bookOptional = bookService.getBookById(bookId);
         if (bookOptional.isEmpty()) {
             return "book/warning";
@@ -44,8 +45,8 @@ public class RentController {
         return "forward:/book/all";
     }
 
-    @GetMapping("/return/{bookId}")
-    public String returnBook(@PathVariable ("bookId") Long bookId, ModelMap modelMap) {
+    @GetMapping("/return")
+    public String returnBook(@RequestParam ("bookId") Long bookId, ModelMap modelMap) {
         Optional<Book> bookOptional = bookService.getBookById(bookId);
         if (bookOptional.isEmpty()) {
             return "book/warning";

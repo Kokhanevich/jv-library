@@ -28,7 +28,7 @@
             <td> Authors </td>
             <td>${rent.active}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/rent/return/${book.id}">return<a/>
+                <a href="${pageContext.request.contextPath}/rent/return?bookId=${book.id}">return<a/>
             </td>
         </tr>
     </c:forEach>
