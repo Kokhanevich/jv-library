@@ -4,6 +4,8 @@
     <title>$Title$</title>
   </head>
   <body>
-  Hello world!!!
+  <a href="${pageContext.request.contextPath}/book/all">all books</a>
+  <a href="${pageContext.request.contextPath}/inject">injectData</a>
+
   </body>
 </html>
