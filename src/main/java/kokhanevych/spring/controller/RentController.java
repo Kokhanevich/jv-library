@@ -8,6 +8,8 @@ import kokhanevych.spring.service.BookService;
 import kokhanevych.spring.service.LibraryService;
 import kokhanevych.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/rent")
 public class RentController {
-    private static final Long USER_ID = 1L;
 
     @Autowired
     private UserService userService;
@@ -34,7 +35,7 @@ public class RentController {
         if (bookOptional.isEmpty()) {
             return "book/warning";
         }
-        Optional<User> userOptional = userService.getUser(USER_ID);
+        Optional<User> userOptional = getCurrentUser();
         if (userOptional.isEmpty()) {
             return "user/warning";
         }
@@ -48,7 +49,7 @@ public class RentController {
         if (bookOptional.isEmpty()) {
             return "book/warning";
         }
-        Optional<User> userOptional = userService.getUser(USER_ID);
+        Optional<User> userOptional = getCurrentUser();
         if (userOptional.isEmpty()) {
             return "user/warning";
         }
@@ -58,12 +59,17 @@ public class RentController {
 
     @GetMapping("/rentedBooks")
     public String getRentedBooks(ModelMap modelMap) {
-        Optional<User> userOptional = userService.getUser(USER_ID);
+        Optional<User> userOptional = getCurrentUser();
         if (userOptional.isEmpty()) {
             return "user/warning";
         }
         List<Book> booksRentByUser = libraryService.getBooksRentByUser(userOptional.get());
         modelMap.put("books", booksRentByUser);
         return "rent/rentBooks";
+    }
+
+    private Optional<User> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return userService.getUserByUserName(authentication.getName());
     }
 }

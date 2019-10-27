@@ -21,6 +21,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Optional<User> getUserByUserName(String userName) {
+        TypedQuery<User> query = sessionFactory.getCurrentSession()
+                .createQuery("from User where userName=:userName",
+                User.class);
+        query.setParameter("userName", userName);
+        return Optional.ofNullable(query.getSingleResult());
+    }
+
+    @Override
     public Optional<User> getUser(Long id) {
         return Optional.ofNullable(sessionFactory.getCurrentSession().get(User.class, id));
     }
