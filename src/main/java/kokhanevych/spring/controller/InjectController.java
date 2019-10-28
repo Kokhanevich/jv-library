@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/inject")
 public class InjectController {
     @Autowired
-    BookService bookService;
+    private BookService bookService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping
     public String injectData() {

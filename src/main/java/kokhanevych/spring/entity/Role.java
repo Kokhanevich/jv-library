@@ -1,12 +1,10 @@
 package kokhanevych.spring.entity;
 
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,8 +15,6 @@ public class Role {
     private Long roleId;
     @Column(unique = true)
     private String roleName;
-    @ManyToMany(mappedBy = "roles")
-    private List<User> userList;
 
     public Role() {
 
@@ -42,13 +38,5 @@ public class Role {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
     }
 }
